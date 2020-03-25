@@ -71,22 +71,52 @@ extension PicturePickerController {
          // Configure the cell
         
         cell.backgroundColor = .red
+        
+        // 设置代理
+        cell.pictureDelegate = self
      
          return cell
      }
 }
 
+extension PicturePickerController: PicturePickerCellDelegate {
+    
+    // 添加照片
+    internal func PicturePickerCellAdd(cell: PicturePickerCell) {
+
+    }
+   
+    // 删除照片
+    internal func PicturePickerCellRemove(cell: PicturePickerCell) {
+        
+    }
+}
+
+///  PicturePickerCell 代理
+@objc
+protocol PicturePickerCellDelegate: NSObjectProtocol {
+    
+    // 添加照片
+    @objc optional func PicturePickerCellAdd(cell: PicturePickerCell)
+    // 删除照片
+    @objc optional func PicturePickerCellRemove(cell: PicturePickerCell)
+}
 
 // MARK: - 照片选择 cell
 class PicturePickerCell: UICollectionViewCell {
     
+    // 照片选择代理
+    weak var pictureDelegate: PicturePickerCellDelegate?
+    
     // MARK: - 监听方法
     @objc func addPicture() {
         print("添加照片")
+        pictureDelegate?.PicturePickerCellAdd?(cell: self)
     }
     
     @objc func removePicture() {
         print("删除照片")
+        pictureDelegate?.PicturePickerCellRemove?(cell: self)
     }
     
     // MARK: - 构造函数
