@@ -12,6 +12,9 @@ private let PicturePickerCellId = "PicturePickerCellId"
 
 class PicturePickerController: UICollectionViewController {
     
+    // 配图数组
+    lazy var pictures = [UIImage]()
+
     // MARK: - 构造函数
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -62,13 +65,18 @@ extension PicturePickerController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
          // #warning Incomplete implementation, return the number of items
-         return 10
+        
+        // 保证末尾有一个加号按钮
+        return pictures.count + 1
      }
 
      override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PicturePickerCellId, for: indexPath) as! PicturePickerCell
      
          // Configure the cell
+        
+        // 设置图像
+        cell.image = (indexPath.item < pictures.count) ? pictures[indexPath.item] : nil
         
         cell.backgroundColor = .red
         
@@ -100,7 +108,7 @@ extension PicturePickerController: PicturePickerCellDelegate {
         picker.delegate = self
         
         // 是否允许编辑
-        picker.allowsEditing = true
+        //picker.allowsEditing = true
         
         self.present(picker, animated: true, completion: nil)
         
@@ -121,7 +129,14 @@ extension PicturePickerController: UIImagePickerControllerDelegate, UINavigation
     ///   - info: info 字典
     /// - 提示： 一旦实现代理方法，必须dismiss
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(info)
+        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        
+        // 将图片添加到数组
+        pictures.append(image)
+        
+        // 刷新视图
+        collectionView.reloadData()
+        
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -141,6 +156,13 @@ class PicturePickerCell: UICollectionViewCell {
     
     // 照片选择代理
     weak var pictureDelegate: PicturePickerCellDelegate?
+    
+    var image: UIImage? {
+        didSet {
+            addButton.setImage(image ?? UIImage(named: "compose_pic_add"), for: .normal)
+        }
+    }
+    
     
     // MARK: - 监听方法
     @objc func addPicture() {
