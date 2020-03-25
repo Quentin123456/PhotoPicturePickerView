@@ -12,7 +12,7 @@ import UIKit
 private let PicturePickerCellId = "PicturePickerCellId"
 
 // 最大选择照片数量
-private let PicturePickerMaxCount = 4
+private let PicturePickerMaxCount = 3
 
 class PicturePickerController: UICollectionViewController {
     
@@ -139,9 +139,9 @@ extension PicturePickerController: PicturePickerCellDelegate {
         // 3.删除数据
         pictures.remove(at: indexPath.item)
         
-        // 4.动画刷新视图
+        // 4.动画刷新视图 - 两个方法选一个就行
         collectionView.deleteItems(at: [indexPath])
-        
+        //collectionView.reloadData()
     }
 }
 
