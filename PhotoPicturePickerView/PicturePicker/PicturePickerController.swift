@@ -84,11 +84,45 @@ extension PicturePickerController: PicturePickerCellDelegate {
     // 添加照片
     internal func PicturePickerCellAdd(cell: PicturePickerCell) {
 
+        // 判断是否允许访问相册
+        /**
+            photoLibrary   保存的照片（可以删除） + 同步的照片（不允许删除）
+            savePhotosAlbum 保存的照片/截屏/拍照
+         */
+        if !UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            print("无法访问照片库")
+            return
+        }
+        
+        let picker = UIImagePickerController()
+        
+        // 设置代理
+        picker.delegate = self
+        
+        // 是否允许编辑
+        picker.allowsEditing = true
+        
+        self.present(picker, animated: true, completion: nil)
+        
     }
    
     // 删除照片
     internal func PicturePickerCellRemove(cell: PicturePickerCell) {
         
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
+extension PicturePickerController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    /// 照片选择完成
+    /// - Parameters:
+    ///   - picker: 照片选择器
+    ///   - info: info 字典
+    /// - 提示： 一旦实现代理方法，必须dismiss
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print(info)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

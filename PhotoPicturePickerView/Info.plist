@@ -56,5 +56,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>是否允许写入照片库？</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>是否允许访问照片库？</string>
 </dict>
 </plist>
