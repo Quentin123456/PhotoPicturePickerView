@@ -8,12 +8,19 @@
 
 import UIKit
 
+// 可重用 cell
 private let PicturePickerCellId = "PicturePickerCellId"
+
+// 最大选择照片数量
+private let PicturePickerMaxCount = 4
 
 class PicturePickerController: UICollectionViewController {
     
     // 配图数组
     lazy var pictures = [UIImage]()
+    
+    // 当前用户选中的照片索引
+    private var selectedIndex = 0
 
     // MARK: - 构造函数
     init() {
@@ -67,7 +74,7 @@ extension PicturePickerController {
          // #warning Incomplete implementation, return the number of items
         
         // 保证末尾有一个加号按钮
-        return pictures.count + 1
+        return pictures.count + (pictures.count == PicturePickerMaxCount ? 0 : 1)
      }
 
      override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -78,7 +85,7 @@ extension PicturePickerController {
         // 设置图像
         cell.image = (indexPath.item < pictures.count) ? pictures[indexPath.item] : nil
         
-        cell.backgroundColor = .red
+//        cell.backgroundColor = .red
         
         // 设置代理
         cell.pictureDelegate = self
@@ -102,6 +109,10 @@ extension PicturePickerController: PicturePickerCellDelegate {
             return
         }
         
+        // 记录当前用户选中的照片索引
+        selectedIndex = collectionView.indexPath(for: cell)?.item ?? 0
+        
+        // 显示照片选择器
         let picker = UIImagePickerController()
         
         // 设置代理
@@ -117,6 +128,20 @@ extension PicturePickerController: PicturePickerCellDelegate {
     // 删除照片
     internal func PicturePickerCellRemove(cell: PicturePickerCell) {
         
+        // 1.获取照片索引
+        let indexPath = collectionView!.indexPath(for: cell)!
+        
+        // 2.判断索引是否超出上限
+        if indexPath.item >= pictures.count {
+            return
+        }
+        
+        // 3.删除数据
+        pictures.remove(at: indexPath.item)
+        
+        // 4.动画刷新视图
+        collectionView.deleteItems(at: [indexPath])
+        
     }
 }
 
@@ -129,10 +154,19 @@ extension PicturePickerController: UIImagePickerControllerDelegate, UINavigation
     ///   - info: info 字典
     /// - 提示： 一旦实现代理方法，必须dismiss
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         
+        let scaleImage = image.scaleToWidth(width: 600)
+        
+        
         // 将图片添加到数组
-        pictures.append(image)
+        // 判断当前选中的索引是否超出数组上限
+        if selectedIndex >= pictures.count {
+            pictures.append(scaleImage)
+        } else {
+            pictures[selectedIndex] = scaleImage
+        }
         
         // 刷新视图
         collectionView.reloadData()
@@ -160,6 +194,9 @@ class PicturePickerCell: UICollectionViewCell {
     var image: UIImage? {
         didSet {
             addButton.setImage(image ?? UIImage(named: "compose_pic_add"), for: .normal)
+            
+            // 隐藏删除按钮 image == nil 就是新增按钮
+            removeButton.isHidden = (image == nil)
         }
     }
     
@@ -203,6 +240,10 @@ class PicturePickerCell: UICollectionViewCell {
         addButton.addTarget(self, action: #selector(addPicture), for: .touchUpInside)
         
         removeButton.addTarget(self, action: #selector(removePicture), for: .touchUpInside)
+        
+        // 4.设置填充模式
+        addButton.imageView?.contentMode = .scaleAspectFill
+        
     }
     
     // MARK: - 懒加载控件

@@ -54,6 +54,7 @@
 		17B95DE4242AF1C400A9C312 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B95DE1242AF1C400A9C312 /* UILabelExtension.swift */; };
 		17B95DE5242AF1C400A9C312 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B95DE2242AF1C400A9C312 /* UIButtonExtension.swift */; };
 		17B95DE6242AF1C400A9C312 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B95DE3242AF1C400A9C312 /* UIImageViewExtension.swift */; };
+		17B95DE8242B3E9500A9C312 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B95DE7242B3E9500A9C312 /* UIImageExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		17B95DE1242AF1C400A9C312 /* UILabelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		17B95DE2242AF1C400A9C312 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		17B95DE3242AF1C400A9C312 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
+		17B95DE7242B3E9500A9C312 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 			children = (
 				17B95DE2242AF1C400A9C312 /* UIButtonExtension.swift */,
 				17B95DE3242AF1C400A9C312 /* UIImageViewExtension.swift */,
+				17B95DE7242B3E9500A9C312 /* UIImageExtension.swift */,
 				17B95DE1242AF1C400A9C312 /* UILabelExtension.swift */,
 				17B95D97242AF0EA00A9C312 /* Source */,
 				17B95D95242AEABE00A9C312 /* PicturePickerController.swift */,
@@ -408,6 +411,7 @@
 				17B95DE5242AF1C400A9C312 /* UIButtonExtension.swift in Sources */,
 				17B95DD2242AF0EA00A9C312 /* ConstraintOffsetTarget.swift in Sources */,
 				17B95DC0242AF0EA00A9C312 /* ConstraintMakerPriortizable.swift in Sources */,
+				17B95DE8242B3E9500A9C312 /* UIImageExtension.swift in Sources */,
 				17B95D69242AEA3700A9C312 /* ViewController.swift in Sources */,
 				17B95D65242AEA3700A9C312 /* AppDelegate.swift in Sources */,
 				17B95DDA242AF0EA00A9C312 /* Debugging.swift in Sources */,
